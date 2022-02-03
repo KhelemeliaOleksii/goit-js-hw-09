@@ -1,7 +1,10 @@
-// Описан в документации
+// Используй библиотеку flatpickr для того чтобы позволить пользователю 
+//кроссбраузерно выбрать конечную дату и время в одном элементе интерфейса. 
 import flatpickr from "flatpickr";
 // Дополнительный импорт стилей
 import 'flatpickr/dist/flatpickr.min.css';
+//Для отображения уведомлений пользователю вместо window.alert() используй библиотеку notiflix.
+import Notiflix from 'notiflix';
 
 //select objects on HTML page
 const refs = {
@@ -16,36 +19,9 @@ const refs = {
     boardNumberFields: document.querySelectorAll('.value'),
     boardLabelFields: document.querySelectorAll('.label'),
 }
+// format timer style
 timerFormatingStyles ();
-function timerFormatingStyles () {
-    refs.timerBoard.style.display ="flex";
-    refs.timerBoard.style.minWidth = "80px"
-    refs.timerBoard.style.width = "250px"
-    refs.boardFields.forEach((item)=> {
-            item.style.display ="flex";
-        }
-    );
-    refs.boardFields.forEach((item)=> {
-            item.style.flexDirection = "column";
-            item.style.flexBasis = "calc((100% / 4)) ";
-            // item.style.justifyContent = "flex-end";
-        }
-    );
-    refs.boardNumberFields.forEach((item)=> {
-            item.style.fontSize = "2rem";
-            item.style.fontWeight = "500";
-            item.style.textAlign ="center";
-        }
-    );
-    refs.boardLabelFields.forEach((item)=> {
-        // console.log(item);
-        item.style.textTransform = "uppercase";
-        item.style.fontSize = "0.8rem";
-        item.style.fontWeight = "500";
-        item.style.textAlign ="center";
-    }
-);
-}
+
 //refs.boardField.style.flexDirection = "column";
 // is button "start" active
 let isBtnActive = false;
@@ -69,7 +45,8 @@ const options = {
             isBtnActive = true;
             toggleBtnActiveStyle(refs.btnStart, isBtnActive)       
         } else {
-            window.alert("Please choose a date in the future");
+            Notiflix.Notify.info("Please choose a date in the future");
+            //window.alert("Please choose a date in the future");
         }
     },
 };
@@ -141,7 +118,8 @@ function writeTimeOnBoard() {
 //      - alert ("Time over!");
 function timeOver() {
     refs.inputDate.removeAttribute("disabled", "");
-    window.alert("Time over!");
+    Notiflix.Notify.info("Time over!");
+    // window.alert("Time over!");
     clearInterval(intervalID);
 }
 
@@ -186,4 +164,32 @@ function convertMs(ms) {
     return { days, hours, minutes, seconds };
 }
 
- 
+function timerFormatingStyles () {
+    refs.timerBoard.style.display ="flex";
+    refs.timerBoard.style.minWidth = "80px"
+    refs.timerBoard.style.width = "250px"
+    refs.boardFields.forEach((item)=> {
+            item.style.display ="flex";
+        }
+    );
+    refs.boardFields.forEach((item)=> {
+            item.style.flexDirection = "column";
+            item.style.flexBasis = "calc((100% / 4)) ";
+            // item.style.justifyContent = "flex-end";
+        }
+    );
+    refs.boardNumberFields.forEach((item)=> {
+            item.style.fontSize = "2rem";
+            item.style.fontWeight = "500";
+            item.style.textAlign ="center";
+        }
+    );
+    refs.boardLabelFields.forEach((item)=> {
+        // console.log(item);
+        item.style.textTransform = "uppercase";
+        item.style.fontSize = "0.8rem";
+        item.style.fontWeight = "500";
+        item.style.textAlign ="center";
+    }
+);
+}
