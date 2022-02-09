@@ -20,6 +20,7 @@ function btnStartOnClickListener() {
     if (isStarted) {
         return;
     }
+    btnStart.setAttribute("disabled", "");
     isStarted = true;
     changeColor();
     intervalId = setInterval(()=> {
@@ -39,6 +40,7 @@ function changeColor() {
 function btnStoptOnClickListener() {
     clearInterval(intervalId);
     isStarted = false;
+    btnStart.removeAttribute("disabled", "");
 };
 
 //getRandomHexColor
